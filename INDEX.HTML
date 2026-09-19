@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REMO 리모 팀기업 | Team-com-leinnkorean.com</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              800: '#0c4a6e',
+              900: '#082f49'
+            },
+            accent: {
+              amber: '#f59e0b',
+              emerald: '#10b981'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Pretendard', sans-serif;
+      scroll-behavior: smooth;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 9999px;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-sky-500 selection:text-white flex flex-col min-h-screen">
+
+  <!-- Top Meta Banner (Domain, Admin, System indicators) -->
+  <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center space-x-3">
+        <span class="inline-flex items-center text-sky-400 font-medium tracking-wide">
+          <i data-lucide="globe" class="w-3.5 h-3.5 mr-1.5"></i>
+          Team-com-leinnkorean.com
+        </span>
+        <span class="text-slate-600">|</span>
+        <span class="hidden sm:inline-flex items-center text-slate-400">
+          <i data-lucide="git-branch" class="w-3.5 h-3.5 mr-1 text-emerald-400"></i>
+          GitHub: TeamCompany
+        </span>
+        <span class="hidden md:inline-flex items-center text-slate-400">
+          <i data-lucide="database" class="w-3.5 h-3.5 mr-1 text-purple-400"></i>
+          Neon DB · Vercel Blob
+        </span>
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <!-- Admin status chip & toggle -->
+        <button id="adminToggleBtn" onclick="toggleAdminMode()" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors border border-slate-700">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="font-medium text-[11px]">계정: <span id="adminBadgeText">remo-admin</span></span>
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-sky-400"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 via-blue-700 to-indigo-800 flex items-center justify-center text-white font-black text-xl shadow-md shadow-sky-500/20">
+            R
+          </div>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="text-xl font-extrabold tracking-tight text-slate-900">REMO</span>
+              <span class="text-xs px-2 py-0.5 rounded-full bg-sky-100 text-sky-800 font-semibold">팀기업</span>
+            </div>
+            <p class="text-[10px] text-slate-500 tracking-wider">LEINN KOREAN TEAM-COMPANY</p>
+          </div>
+        </div>
+
+        <!-- Desktop Menu List -->
+        <nav class="hidden xl:flex items-center space-x-1" id="desktopNav">
+          <button onclick="navigateTo('home')" data-target="home" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold transition text-sky-700 bg-sky-50">메인</button>
+          <button onclick="navigateTo('about')" data-target="about" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-sky-600 hover:bg-slate-50 transition">팀기업 소개</button>
+          <button onclick="navigateTo('team')" data-target="team" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-sky-600 hover:bg-slate-50 transition">구성원</button>
+          <button onclick="navigateTo('projects')" data-target="projects" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-sky-600 hover:bg-slate-50 transition">진행프로젝트</button>
+          <button onclick="navigateTo('services')" data-target="services" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-sky-600 hover:bg-slate-50 transition">주요 상품/서비스</button>
+          <button onclick="navigateTo('landing')" data-target="landing" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-sky-600 hover:bg-slate-50 transition relative">
+            랜딩페이지
+            <span class="ml-1 text-[10px] bg-amber-100 text-amber-800 font-bold px-1.5 py-0.5 rounded">준비중</span>
+          </button>
+          <button onclick="navigateTo('contact')" data-target="contact" class="nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-sky-600 hover:bg-slate-50 transition">
+            고객상담
+            <span class="ml-1 text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded">Contact</span>
+          </button>
+          <button onclick="navigateTo('board')" data-target="board" class="nav-btn px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-700 hover:text-sky-600 hover:bg-slate-50 transition flex items-center gap-1">
+            <i data-lucide="message-square" class="w-4 h-4 text-sky-600"></i>
+            자유 게시판
+          </button>
+        </nav>
+
+        <!-- CTA & Mobile Menu Toggle -->
+        <div class="flex items-center gap-2">
+          <button onclick="navigateTo('board')" class="hidden sm:inline-flex items-center gap-2 bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-700 hover:to-blue-800 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow-sm transition">
+            <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+            게시글 쓰기
+          </button>
+          
+          <button onclick="toggleMobileMenu()" class="xl:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none">
+            <i data-lucide="menu" id="menuIcon" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="mobileMenu" class="hidden xl:hidden border-t border-slate-200 bg-white/95 px-4 pt-3 pb-6 space-y-2 shadow-lg">
+      <button onclick="navigateTo('home'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600 flex items-center gap-2">
+        <i data-lucide="home" class="w-4 h-4 text-sky-600"></i> 메인
+      </button>
+      <button onclick="navigateTo('about'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600 flex items-center gap-2">
+        <i data-lucide="compass" class="w-4 h-4 text-sky-600"></i> 팀기업 소개
+      </button>
+      <button onclick="navigateTo('team'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600 flex items-center gap-2">
+        <i data-lucide="users" class="w-4 h-4 text-sky-600"></i> 구성원
+      </button>
+      <button onclick="navigateTo('projects'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600 flex items-center gap-2">
+        <i data-lucide="briefcase" class="w-4 h-4 text-sky-600"></i> 진행프로젝트
+      </button>
+      <button onclick="navigateTo('services'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600 flex items-center gap-2">
+        <i data-lucide="box" class="w-4 h-4 text-sky-600"></i> 주요 상품/서비스
+      </button>
+      <button onclick="navigateTo('landing'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600 flex items-center justify-between">
+        <span class="flex items-center gap-2"><i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i> 랜딩페이지</span>
+        <span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-1.5 py-0.5 rounded">준비중</span>
+      </button>
+      <button onclick="navigateTo('contact'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-sky-50 hover:text-sky-600 flex items-center justify-between">
+        <span class="flex items-center gap-2"><i data-lucide="headphones" class="w-4 h-4 text-emerald-500"></i> 고객상담</span>
+        <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded">메뉴연결</span>
+      </button>
+      <button onclick="navigateTo('board'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-sky-700 bg-sky-50 flex items-center gap-2">
+        <i data-lucide="message-square" class="w-4 h-4 text-sky-600"></i> 자유 게시판
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    
+    <!-- PAGE 1: 메인 (Home) -->
+    <section id="page-home" class="page-content">
+      <!-- Hero Banner with Dynamic Slides -->
+      <div class="relative bg-slate-900 overflow-hidden text-white">
+        <!-- Background Graphic & Image Placeholder Overlay -->
+        <div class="absolute inset-0 z-0 opacity-30 mix-blend-overlay">
+          <img id="heroImage" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80" alt="REMO Team Collaboration" class="w-full h-full object-cover transition-opacity duration-1000">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/80 to-sky-950/40 z-0"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 flex flex-col justify-center">
+          <div class="max-w-3xl space-y-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-sky-500/20 border border-sky-400/30 text-sky-300 text-xs font-semibold tracking-wider">
+              <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+              REMO TEAM COMPANY
+            </div>
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+              실천으로 배우고 함께 성장하는 <br class="hidden sm:inline">
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-300 to-indigo-300">리모 팀기업의 새로운 도약</span>
+            </h1>
+            <p class="text-base sm:text-lg text-slate-300 font-normal leading-relaxed">
+              도전과 협동, 그리고 기업가정신(LEINN)을 기반으로 고객과 사회에 실질적인 가치를 창출합니다. 
+              다양한 프로젝트와 서비스를 통해 혁신적인 미래 비즈니스를 만들어갑니다.
+            </p>
+            <div class="pt-4 flex flex-wrap gap-3 sm:gap-4">
+              <button onclick="navigateTo('projects')" class="px-6 py-3.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-white font-bold text-sm shadow-lg shadow-sky-500/30 flex items-center gap-2 transition transform hover:-translate-y-0.5">
+                진행 프로젝트 보기
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </button>
+              <button onclick="navigateTo('about')" class="px-6 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-white font-semibold text-sm backdrop-blur transition">
+                팀기업 이야기
+              </button>
+              <button onclick="navigateTo('board')" class="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-sm backdrop-blur transition flex items-center gap-1.5">
+                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                자유게시판 바로가기
+              </button>
+            </div>
+          </div>
+
+          <!-- Hero Image switcher indicators -->
+          <div class="mt-12 flex items-center gap-2">
+            <span class="text-xs text-slate-400 mr-2">배경 테마 선택:</span>
+            <button onclick="changeHeroImage(0)" class="hero-dot w-3 h-3 rounded-full bg-sky-400 ring-2 ring-sky-300" title="협업"></button>
+            <button onclick="changeHeroImage(1)" class="hero-dot w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-400" title="혁신 워크샵"></button>
+            <button onclick="changeHeroImage(2)" class="hero-dot w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-400" title="글로벌 비전"></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Highlights Section -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-white p-6 rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center shrink-0">
+              <i data-lucide="users" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-900 text-lg mb-1">협동형 팀기업</h3>
+              <p class="text-sm text-slate-600">리모 팀기업은 팀원 전원이 주도적으로 비즈니스를 실험하고 가치를 공유합니다.</p>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+              <i data-lucide="rocket" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-900 text-lg mb-1">실전 기반 프로젝트</h3>
+              <p class="text-sm text-slate-600">아이디어에 머물지 않고 실제 프로토타입과 유료 서비스를 출시하여 검증합니다.</p>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
+              <i data-lucide="server" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-900 text-lg mb-1">현대적 기술 스택</h3>
+              <p class="text-sm text-slate-600">Vercel 호스팅, Neon Postgres DB, Vercel Blob 스토리지 기반의 안정적인 인프라입니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overview teaser -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">주요 프로젝트 하이라이트</h2>
+            <p class="text-sm text-slate-500 mt-1">리모 팀이 현재 활발히 진행 중인 대표 혁신 과제들입니다.</p>
+          </div>
+          <button onclick="navigateTo('projects')" class="text-sm font-semibold text-sky-600 hover:text-sky-700 flex items-center gap-1">
+            전체 프로젝트 보기 <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="homeProjectGrid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 2: 팀기업 소개 (About Us) -->
+    <section id="page-about" class="page-content hidden py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="text-sky-600 font-bold text-xs uppercase tracking-widest bg-sky-50 px-3 py-1 rounded-full">About REMO</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3 mb-4">
+            우리는 배우는 팀이며, 실천하는 기업입니다
+          </h2>
+          <p class="text-base text-slate-600 leading-relaxed">
+            리모(REMO) 팀기업은 핀란드 몬드라곤의 혁신적 기업가정신 교육(LEINN) 방식을 계승하여,
+            교실을 넘어 실제 시장에서 고객과 부딪히며 사회적·경제적 가치를 창출하는 자율적 팀기업입니다.
+          </p>
+        </div>
+
+        <!-- Vision / Mission Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div class="bg-white rounded-2xl p-8 border border-slate-200/80 shadow-sm hover:shadow-md transition">
+            <div class="w-12 h-12 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center mb-6">
+              <i data-lucide="target" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-3">미션 (Mission)</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              모든 팀원이 주인이 되어 서로의 성장을 지원하고, 실제 비즈니스 솔루션을 통해 고객의 문제를 본질적으로 해결합니다.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-2xl p-8 border border-slate-200/80 shadow-sm hover:shadow-md transition">
+            <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center mb-6">
+              <i data-lucide="eye" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-3">비전 (Vision)</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              지역과 글로벌을 연결하는 팀 아카데미 기반 비즈니스 생태계를 개척하며, 지속 가능한 협동 혁신 모델을 구축합니다.
+            </p>
+          </div>
+
+          <div class="bg-white rounded-2xl p-8 border border-slate-200/80 shadow-sm hover:shadow-md transition">
+            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center mb-6">
+              <i data-lucide="award" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-3">핵심 가치 (Core Values)</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              수평적 소통, 끊임없는 행동(Learning by Doing), 실패를 두려워하지 않는 대담한 실행, 그리고 투명한 팀워크를 지향합니다.
+            </p>
+          </div>
+        </div>
+
+        <!-- History / Roadmap -->
+        <div class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm">
+          <h3 class="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-2">
+            <i data-lucide="milestone" class="w-6 h-6 text-sky-600"></i>
+            리모 팀기업의 발자취 및 로드맵
+          </h3>
+          <div class="space-y-8 relative before:absolute before:inset-0 before:left-3.5 before:w-0.5 before:bg-slate-200">
+            <div class="relative pl-10">
+              <div class="absolute left-1.5 top-1.5 w-5 h-5 rounded-full bg-sky-600 ring-4 ring-sky-100"></div>
+              <span class="text-xs font-bold text-sky-600 uppercase tracking-wide">2026. 09 ~</span>
+              <h4 class="text-base font-bold text-slate-900 mt-1">공식 도메인 및 통합 서비스 플랫폼 런칭</h4>
+              <p class="text-sm text-slate-600 mt-1">Team-com-leinnkorean.com 공식 런칭 및 Vercel + Neon DB 기반 자유게시판·고객지원 확장</p>
+            </div>
+            <div class="relative pl-10">
+              <div class="absolute left-1.5 top-1.5 w-5 h-5 rounded-full bg-slate-400 ring-4 ring-slate-100"></div>
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wide">2026. 상반기</span>
+              <h4 class="text-base font-bold text-slate-900 mt-1">LEINN 기반 실전 비즈니스 프로젝트 3종 상용화</h4>
+              <p class="text-sm text-slate-600 mt-1">기업 및 개인 고객을 위한 워크숍, 디지털 콘텐츠 및 컨설팅 서비스 파일럿 진행</p>
+            </div>
+            <div class="relative pl-10">
+              <div class="absolute left-1.5 top-1.5 w-5 h-5 rounded-full bg-slate-400 ring-4 ring-slate-100"></div>
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wide">팀기업 설립</span>
+              <h4 class="text-base font-bold text-slate-900 mt-1">리모(REMO) 팀기업 출범</h4>
+              <p class="text-sm text-slate-600 mt-1">다양한 배경의 팀 기업가들이 모여 협동형 경영 모델을 위한 원팀 체제 수립</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 3: 구성원 (Team Members) -->
+    <section id="page-team" class="page-content hidden py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="text-sky-600 font-bold text-xs uppercase tracking-widest bg-sky-50 px-3 py-1 rounded-full">Members</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3 mb-4">
+            리모를 이끄는 팀 기업가들
+          </h2>
+          <p class="text-base text-slate-600 leading-relaxed">
+            리모는 개별 직원이 아닌 모두가 의사결정권을 가진 팀 기업가(Team Entrepreneurs)로 함께 일합니다.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <!-- Member 1 -->
+          <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition group">
+            <div class="h-60 overflow-hidden relative bg-slate-100">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" alt="김리모" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+              <div class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur text-white text-[11px] font-semibold px-2.5 py-1 rounded-full">
+                Team Leader
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-lg font-bold text-slate-900">김리모</h3>
+              <p class="text-xs text-sky-600 font-semibold mb-3">총괄 리더 & 비즈니스 전략</p>
+              <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                팀 비전 수립 및 파트너십 구축을 총괄하며 지속 가능한 성장 모델을 연구합니다.
+              </p>
+              <div class="flex items-center gap-3 pt-3 border-t border-slate-100 text-slate-400">
+                <a href="mailto:remo-admin@leinnkorean.com" class="hover:text-sky-600 transition" title="이메일"><i data-lucide="mail" class="w-4 h-4"></i></a>
+                <a href="#" class="hover:text-sky-600 transition" title="LinkedIn"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                <a href="#" class="hover:text-sky-600 transition" title="GitHub"><i data-lucide="github" class="w-4 h-4"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Member 2 -->
+          <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition group">
+            <div class="h-60 overflow-hidden relative bg-slate-100">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" alt="박동혁" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+              <div class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur text-white text-[11px] font-semibold px-2.5 py-1 rounded-full">
+                Product Tech
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-lg font-bold text-slate-900">박동혁</h3>
+              <p class="text-xs text-sky-600 font-semibold mb-3">풀스택 엔지니어 & 인프라</p>
+              <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                Vercel, Next.js, Neon DB 기반 클라우드 서비스 개발과 시스템 안정화를 담당합니다.
+              </p>
+              <div class="flex items-center gap-3 pt-3 border-t border-slate-100 text-slate-400">
+                <a href="mailto:remo-admin@leinnkorean.com" class="hover:text-sky-600 transition"><i data-lucide="mail" class="w-4 h-4"></i></a>
+                <a href="#" class="hover:text-sky-600 transition"><i data-lucide="github" class="w-4 h-4"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Member 3 -->
+          <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition group">
+            <div class="h-60 overflow-hidden relative bg-slate-100">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80" alt="이서연" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+              <div class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur text-white text-[11px] font-semibold px-2.5 py-1 rounded-full">
+                Design & UX
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-lg font-bold text-slate-900">이서연</h3>
+              <p class="text-xs text-sky-600 font-semibold mb-3">프로덕트 디자이너 & 브랜드</p>
+              <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                사용자 중심의 직관적인 인터페이스와 리모 팀기업의 통일된 브랜드 아이덴티티를 디자인합니다.
+              </p>
+              <div class="flex items-center gap-3 pt-3 border-t border-slate-100 text-slate-400">
+                <a href="mailto:remo-admin@leinnkorean.com" class="hover:text-sky-600 transition"><i data-lucide="mail" class="w-4 h-4"></i></a>
+                <a href="#" class="hover:text-sky-600 transition"><i data-lucide="globe" class="w-4 h-4"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Member 4 -->
+          <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition group">
+            <div class="h-60 overflow-hidden relative bg-slate-100">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80" alt="정재민" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+              <div class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur text-white text-[11px] font-semibold px-2.5 py-1 rounded-full">
+                Operations & Sales
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-lg font-bold text-slate-900">정재민</h3>
+              <p class="text-xs text-sky-600 font-semibold mb-3">고객경험 & 사업개발</p>
+              <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                고객 피드백을 실시간 수집하고 기업 파트너십과 B2B 제휴 세일즈를 견인합니다.
+              </p>
+              <div class="flex items-center gap-3 pt-3 border-t border-slate-100 text-slate-400">
+                <a href="mailto:remo-admin@leinnkorean.com" class="hover:text-sky-600 transition"><i data-lucide="mail" class="w-4 h-4"></i></a>
+                <a href="#" class="hover:text-sky-600 transition"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 4: 진행프로젝트 (Projects) -->
+    <section id="page-projects" class="page-content hidden py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+          <div>
+            <span class="text-sky-600 font-bold text-xs uppercase tracking-widest bg-sky-50 px-3 py-1 rounded-full">Portfolio</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3 mb-2">진행 중인 프로젝트</h2>
+            <p class="text-sm text-slate-600">리모 팀기업이 직접 연구하고 실행하는 비즈니스 과제들입니다.</p>
+          </div>
+          <!-- Project Category Filter -->
+          <div class="flex flex-wrap gap-2" id="projectFilters">
+            <button onclick="filterProjects('ALL')" class="proj-filter active px-3.5 py-1.5 rounded-full text-xs font-semibold bg-sky-600 text-white transition">전체</button>
+            <button onclick="filterProjects('TECH')" class="proj-filter px-3.5 py-1.5 rounded-full text-xs font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition">IT / 솔루션</button>
+            <button onclick="filterProjects('EDU')" class="proj-filter px-3.5 py-1.5 rounded-full text-xs font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition">교육 & 워크숍</button>
+            <button onclick="filterProjects('GLOBAL')" class="proj-filter px-3.5 py-1.5 rounded-full text-xs font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition">글로벌 연계</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projectsGrid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 5: 주요 상품/서비스 (Products & Services) -->
+    <section id="page-services" class="page-content hidden py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="text-sky-600 font-bold text-xs uppercase tracking-widest bg-sky-50 px-3 py-1 rounded-full">Offerings</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3 mb-4">주요 상품 및 서비스</h2>
+          <p class="text-base text-slate-600">팀기업의 유연성과 전문성을 바탕으로 실질적인 솔루션을 제안합니다.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Service Card 1 -->
+          <div class="bg-white rounded-2xl p-8 border border-slate-200/90 shadow-sm hover:shadow-lg transition relative flex flex-col justify-between">
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-sky-500/10 text-sky-600 flex items-center justify-center mb-6">
+                <i data-lucide="layout" class="w-7 h-7"></i>
+              </div>
+              <div class="text-xs font-semibold text-sky-600 mb-1">디지털 전환 솔루션</div>
+              <h3 class="text-xl font-bold text-slate-900 mb-3">맞춤형 웹 & 플랫폼 구축</h3>
+              <p class="text-sm text-slate-600 leading-relaxed mb-6">
+                Next.js, Vercel 고성능 클라우드 인프라와 반응형 UI 디자인을 바탕으로 브랜드 공식 사이트 및 사내 업무 포털을 제작합니다.
+              </p>
+              <ul class="space-y-2 text-xs text-slate-600 mb-8">
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i> 반응형 모던 웹 UI 디자인</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i> Neon Postgres DB & Blob 연동</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i> 관리자 대시보드 커스텀 구현</li>
+              </ul>
+            </div>
+            <button onclick="navigateTo('contact')" class="w-full py-2.5 rounded-xl border border-sky-600 text-sky-600 hover:bg-sky-50 font-semibold text-xs transition text-center">
+              구축 상담 문의하기
+            </button>
+          </div>
+
+          <!-- Service Card 2 -->
+          <div class="bg-white rounded-2xl p-8 border-2 border-sky-500 shadow-md hover:shadow-xl transition relative flex flex-col justify-between">
+            <div class="absolute -top-3 right-6 bg-sky-600 text-white text-[10px] font-bold uppercase tracking-wider py-1 px-3 rounded-full">
+              인기 프로그램
+            </div>
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center mb-6">
+                <i data-lucide="zap" class="w-7 h-7"></i>
+              </div>
+              <div class="text-xs font-semibold text-indigo-600 mb-1">팀 아카데미 & 비즈니스</div>
+              <h3 class="text-xl font-bold text-slate-900 mb-3">팀기업가정신 실전 워크숍</h3>
+              <p class="text-sm text-slate-600 leading-relaxed mb-6">
+                LEINN 기반의 팀 빌딩 및 실제 사업 모델 수립 코칭 프로그램입니다. 이론 강의가 아닌 프로젝트 주도형 러닝을 전수합니다.
+              </p>
+              <ul class="space-y-2 text-xs text-slate-600 mb-8">
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i> 1박 2일 몰입형 해커톤 & 워크숍</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i> 팀 다이얼로그 및 피드백 훈련</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i> 고객 발견 인터뷰 실전 가이드</li>
+              </ul>
+            </div>
+            <button onclick="navigateTo('contact')" class="w-full py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-semibold text-xs transition text-center shadow-md shadow-sky-500/20">
+              워크숍 의뢰하기
+            </button>
+          </div>
+
+          <!-- Service Card 3 -->
+          <div class="bg-white rounded-2xl p-8 border border-slate-200/90 shadow-sm hover:shadow-lg transition relative flex flex-col justify-between">
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center mb-6">
+                <i data-lucide="trending-up" class="w-7 h-7"></i>
+              </div>
+              <div class="text-xs font-semibold text-emerald-600 mb-1">신사업 검증</div>
+              <h3 class="text-xl font-bold text-slate-900 mb-3">MVP 기획 및 시장 반응 검증</h3>
+              <p class="text-sm text-slate-600 leading-relaxed mb-6">
+                초기 스타트업과 프로젝트 팀을 위한 빠른 랜딩페이지 제작과 실제 타깃 고객 유입·전환율 테스트를 원스톱으로 지원합니다.
+              </p>
+              <ul class="space-y-2 text-xs text-slate-600 mb-8">
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i> 원페이지 세일즈 랜딩 기획/제작</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i> 사전 예약 및 리드 수집 파이프라인</li>
+                <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i> 정량/정성 분석 리포트 제공</li>
+              </ul>
+            </div>
+            <button onclick="navigateTo('contact')" class="w-full py-2.5 rounded-xl border border-sky-600 text-sky-600 hover:bg-sky-50 font-semibold text-xs transition text-center">
+              테스트 컨설팅 문의
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 6: 랜딩페이지 (Landing Page - Teaser) -->
+    <section id="page-landing" class="page-content hidden py-16">
+      <div class="max-w-4xl mx-auto px-4 text-center">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-amber-100 text-amber-600 mb-6 shadow-sm">
+          <i data-lucide="sparkles" class="w-10 h-10"></i>
+        </div>
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-600 bg-amber-50 px-3 py-1 rounded-full">Menu Preview</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-4 mb-4">
+          리모 캠페인 전용 랜딩페이지 준비 중
+        </h2>
+        <p class="text-slate-600 max-w-xl mx-auto mb-8 leading-relaxed">
+          해당 메뉴는 신규 런칭 서비스 및 특별 기획 캠페인을 위한 전용 단일 랜딩페이지(Landing Page) 연결 영역입니다. 현재 기획 구체화 단계입니다.
+        </p>
+
+        <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm max-w-lg mx-auto text-left">
+          <h4 class="font-bold text-slate-800 text-sm mb-3 flex items-center gap-2">
+            <i data-lucide="info" class="w-4 h-4 text-sky-600"></i> 랜딩페이지 기획 구성 요소
+          </h4>
+          <ul class="text-xs text-slate-600 space-y-2.5">
+            <li class="flex items-start gap-2">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i>
+              <span>신제품 타깃 고객 맞춤형 직관적 헤더 및 카피라이팅</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i>
+              <span>사전 알림 신청(Email 리드 수집) 폼</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="check" class="w-4 h-4 text-emerald-500 shrink-0"></i>
+              <span>자주 묻는 질문(FAQ) 아코디언 컴포넌트</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 7: 고객상담 (Contact / Support) -->
+    <section id="page-contact" class="page-content hidden py-16">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <span class="text-emerald-600 font-bold text-xs uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-full">Contact Us</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3 mb-4">고객상담 및 협업 제안</h2>
+          <p class="text-slate-600 text-sm">프로젝트 의뢰, 팀기업 제휴, 일반 문의 사항을 남겨주시면 신속히 답변드립니다.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Contact Info Card -->
+          <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-8 flex flex-col justify-between">
+            <div>
+              <h3 class="text-xl font-bold mb-4">리모 팀기업 사무국</h3>
+              <p class="text-xs text-slate-300 mb-6 leading-relaxed">
+                LEINN KOREAN TEAM-COMPANY 공식 채널을 통해 언제든 열려 있는 대화를 환영합니다.
+              </p>
+
+              <div class="space-y-4 text-xs">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center"><i data-lucide="globe" class="w-4 h-4 text-sky-400"></i></div>
+                  <span>Team-com-leinnkorean.com</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center"><i data-lucide="mail" class="w-4 h-4 text-emerald-400"></i></div>
+                  <span>contact@leinnkorean.com</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center"><i data-lucide="user-check" class="w-4 h-4 text-amber-400"></i></div>
+                  <span>담당자: remo-admin</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-8 border-t border-slate-700/60 mt-8 text-[11px] text-slate-400">
+              * 접수된 문의는 Vercel Server Action 및 DB로 안전하게 전송됩니다.
+            </div>
+          </div>
+
+          <!-- Contact Form UI -->
+          <div class="lg:col-span-2 bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+            <form onsubmit="handleContactSubmit(event)" class="space-y-5">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1.5">이름 / 담당자명 <span class="text-rose-500">*</span></label>
+                  <input type="text" required placeholder="홍길동" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none">
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1.5">회신 받을 이메일 <span class="text-rose-500">*</span></label>
+                  <input type="email" required placeholder="name@company.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none">
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">문의 유형</label>
+                <select class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none bg-white">
+                  <option>프로젝트 제작 및 협업 의뢰</option>
+                  <option>교육 / 워크숍 프로그램 문의</option>
+                  <option>팀기업 방문 및 인터뷰 요청</option>
+                  <option>기타 일반 상담</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1.5">상담 내용 <span class="text-rose-500">*</span></label>
+                <textarea rows="4" required placeholder="문의하실 구체적인 내용 또는 예산, 희망 일정을 기재해주세요." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"></textarea>
+              </div>
+
+              <div id="contactSuccessMsg" class="hidden p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-medium flex items-center gap-2">
+                <i data-lucide="check-circle" class="w-4 h-4"></i> 상담 문의가 성공적으로 접수되었습니다. 담당자(remo-admin) 확인 후 회신드리겠습니다!
+              </div>
+
+              <button type="submit" class="w-full py-3.5 rounded-xl bg-slate-900 hover:bg-sky-700 text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2">
+                <i data-lucide="send" class="w-4 h-4"></i> 문의사항 제출하기
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 8: 자유 게시판 (Community Board) -->
+    <section id="page-board" class="page-content hidden py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Board Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-200 gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">자유 게시판</h2>
+              <span class="px-2 py-0.5 rounded-full text-xs font-semibold bg-sky-100 text-sky-800">Community</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">
+              리모 팀원 및 방문자 누구나 자유롭게 의견과 소식을 나누는 공간입니다 (Vercel Neon DB & Blob 연동 모델)
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="openWriteModal()" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-semibold text-xs shadow-sm flex items-center gap-1.5 transition">
+              <i data-lucide="edit-3" class="w-4 h-4"></i>
+              글쓰기
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter & Search toolbar -->
+        <div class="my-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1">
+            <button onclick="filterBoard('all')" class="board-cat-btn active px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-900 text-white transition">전체보기</button>
+            <button onclick="filterBoard('공지')" class="board-cat-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition">공지사항</button>
+            <button onclick="filterBoard('프로젝트')" class="board-cat-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition">프로젝트</button>
+            <button onclick="filterBoard('자유토론')" class="board-cat-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition">자유토론</button>
+          </div>
+
+          <!-- Search Box -->
+          <div class="relative w-full sm:w-72">
+            <input type="text" id="boardSearchInput" onkeyup="handleBoardSearch()" placeholder="제목 또는 작성자 검색..." class="w-full pl-9 pr-4 py-2 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-sky-500 outline-none bg-white">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
+          </div>
+        </div>
+
+        <!-- Posts Table Container -->
+        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-slate-200 text-left text-xs">
+              <thead class="bg-slate-50 font-semibold text-slate-600 uppercase tracking-wider">
+                <tr>
+                  <th scope="col" class="py-3.5 px-4 w-16 text-center">번호</th>
+                  <th scope="col" class="py-3.5 px-4 w-24">분류</th>
+                  <th scope="col" class="py-3.5 px-4">제목</th>
+                  <th scope="col" class="py-3.5 px-4 w-32">작성자</th>
+                  <th scope="col" class="py-3.5 px-4 w-28 text-center">작성일</th>
+                  <th scope="col" class="py-3.5 px-4 w-20 text-center">조회수</th>
+                </tr>
+              </thead>
+              <tbody id="boardTableBody" class="divide-y divide-slate-100 font-normal text-slate-700">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Mock Pagination -->
+        <div class="mt-6 flex items-center justify-between text-xs text-slate-500">
+          <div>전체 <span id="postCountBadge" class="font-bold text-slate-800">5</span>건의 게시글</div>
+          <div class="flex items-center space-x-1">
+            <button class="px-2.5 py-1.5 rounded border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-50" disabled><i data-lucide="chevron-left" class="w-3.5 h-3.5"></i></button>
+            <button class="px-3 py-1.5 rounded bg-sky-600 text-white font-bold">1</button>
+            <button class="px-2.5 py-1.5 rounded border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-50" disabled><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL: Post Detail View -->
+  <div id="postDetailModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl border border-slate-100 overflow-hidden flex flex-col max-h-[90vh]">
+      <!-- Header -->
+      <div class="p-6 border-b border-slate-100 flex items-start justify-between bg-slate-50/50">
+        <div>
+          <div class="flex items-center gap-2 mb-1.5">
+            <span id="detailCategory" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800">공지</span>
+            <span id="detailDate" class="text-xs text-slate-400">2026-09-19</span>
+          </div>
+          <h3 id="detailTitle" class="text-lg sm:text-xl font-bold text-slate-900">게시글 제목</h3>
+          <p class="text-xs text-slate-500 mt-1">작성자: <span id="detailAuthor" class="font-semibold text-slate-700">작성자명</span></p>
+        </div>
+        <button onclick="closeDetailModal()" class="p-1.5 rounded-xl hover:bg-slate-200 text-slate-500 transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Body Content -->
+      <div class="p-6 overflow-y-auto space-y-4 custom-scrollbar text-sm leading-relaxed text-slate-700">
+        <div id="detailContent" class="whitespace-pre-line">
+          본문 내용이 여기에 로드됩니다.
+        </div>
+
+        <!-- Blob Attachment Preview box (if file attached) -->
+        <div id="detailAttachmentBox" class="hidden p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+          <div class="flex items-center gap-2.5">
+            <div class="p-2 rounded-lg bg-sky-100 text-sky-600"><i data-lucide="paperclip" class="w-4 h-4"></i></div>
+            <div>
+              <p id="detailFileName" class="font-semibold text-slate-800">attachment.png</p>
+              <p class="text-[11px] text-slate-400">Vercel Blob Storage 안전 보관</p>
+            </div>
+          </div>
+          <a id="detailFileLink" href="#" target="_blank" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 font-semibold text-sky-600 hover:bg-sky-50 transition">
+            다운로드
+          </a>
+        </div>
+
+        <!-- Admin Delete/Action button -->
+        <div id="adminPostActions" class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+          <span class="text-slate-400">관리자 계정: remo-admin 관리 권한 활성화됨</span>
+          <button onclick="deleteCurrentPost()" class="px-3 py-1.5 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-100 font-semibold transition flex items-center gap-1">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> 삭제
+          </button>
+        </div>
+      </div>
+
+      <div class="p-4 border-t border-slate-100 bg-slate-50 flex justify-end">
+        <button onclick="closeDetailModal()" class="px-5 py-2 rounded-xl bg-slate-800 text-white text-xs font-semibold hover:bg-slate-700">
+          닫기
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Create New Post -->
+  <div id="writeModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-xl rounded-3xl shadow-2xl border border-slate-100 overflow-hidden">
+      <div class="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+        <div class="flex items-center gap-2">
+          <div class="p-1.5 rounded-lg bg-sky-600 text-white"><i data-lucide="feather" class="w-4 h-4"></i></div>
+          <h3 class="text-base font-bold text-slate-900">새 게시글 작성</h3>
+        </div>
+        <button onclick="closeWriteModal()" class="p-1.5 rounded-xl hover:bg-slate-200 text-slate-500">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handlePostSubmit(event)" class="p-6 space-y-4 text-xs">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">카테고리</label>
+            <select id="newPostCategory" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-sky-500 outline-none bg-white">
+              <option value="자유토론">자유토론</option>
+              <option value="프로젝트">프로젝트</option>
+              <option value="공지">공지사항 (관리자 권장)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">작성자명</label>
+            <input type="text" id="newPostAuthor" value="remo-admin" required class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-sky-500 outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">제목</label>
+          <input type="text" id="newPostTitle" required placeholder="게시글 제목을 입력하세요" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-sky-500 outline-none">
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">본문 내용</label>
+          <textarea id="newPostContent" rows="5" required placeholder="자유롭게 의견을 적어주세요. (Vercel Neon Postgres에 저장)" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-sky-500 outline-none"></textarea>
+        </div>
+
+        <!-- Blob Mock Upload -->
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1 flex items-center justify-between">
+            <span>첨부파일 업로드 (Vercel Blob)</span>
+            <span class="text-[10px] text-sky-600 font-normal">Blob 스토리지 모의 연결</span>
+          </label>
+          <div class="border-2 border-dashed border-slate-200 rounded-xl p-3.5 text-center bg-slate-50/50 hover:bg-slate-50 transition cursor-pointer relative">
+            <input type="file" id="newPostFileInput" onchange="handleFileSelected(this)" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
+            <div id="fileUploadPrompt" class="flex flex-col items-center gap-1 text-slate-500">
+              <i data-lucide="upload-cloud" class="w-5 h-5 text-sky-500"></i>
+              <span class="text-[11px]">클릭하여 파일 또는 이미지를 업로드하세요</span>
+            </div>
+            <div id="fileUploadSuccess" class="hidden text-emerald-600 font-semibold text-[11px] flex items-center justify-center gap-1">
+              <i data-lucide="check" class="w-4 h-4"></i>
+              <span id="selectedFileName">file_name.png</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-3 flex justify-end gap-2">
+          <button type="button" onclick="closeWriteModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold">
+            취소
+          </button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-semibold flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="check" class="w-4 h-4"></i> 등록하기
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-400 text-xs border-t border-slate-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <!-- Col 1 -->
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-sky-600 text-white font-black flex items-center justify-center text-base">R</div>
+            <span class="text-white font-bold text-base">REMO 리모 팀기업</span>
+          </div>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            LEINN 기업가정신 체계에 입각한 자율형 혁신 팀기업. <br>
+            함께 배우고, 함께 만들며 사회에 새로운 가능성을 제안합니다.
+          </p>
+          <div class="text-sky-400 font-mono text-[11px]">
+            Domain: Team-com-leinnkorean.com
+          </div>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div>
+          <h4 class="text-white font-semibold text-xs mb-3 uppercase tracking-wider">주요 메뉴</h4>
+          <ul class="space-y-2">
+            <li><button onclick="navigateTo('about')" class="hover:text-white transition">팀기업 소개</button></li>
+            <li><button onclick="navigateTo('team')" class="hover:text-white transition">구성원 프로필</button></li>
+            <li><button onclick="navigateTo('projects')" class="hover:text-white transition">진행프로젝트</button></li>
+            <li><button onclick="navigateTo('services')" class="hover:text-white transition">주요 상품/서비스</button></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Support & Board -->
+        <div>
+          <h4 class="text-white font-semibold text-xs mb-3 uppercase tracking-wider">고객 및 커뮤니티</h4>
+          <ul class="space-y-2">
+            <li><button onclick="navigateTo('board')" class="hover:text-white transition">자유 게시판</button></li>
+            <li><button onclick="navigateTo('landing')" class="hover:text-white transition">랜딩페이지 (준비중)</button></li>
+            <li><button onclick="navigateTo('contact')" class="hover:text-white transition">고객상담 접수</button></li>
+            <li><span class="text-slate-500">관리자 ID: remo-admin</span></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Infra Specs -->
+        <div>
+          <h4 class="text-white font-semibold text-xs mb-3 uppercase tracking-wider">SW 인프라 사양</h4>
+          <ul class="space-y-1.5 text-[11px] text-slate-400">
+            <li>• 저장소: GitHub (TeamCompany)</li>
+            <li>• 호스팅: Vercel Cloud Platform</li>
+            <li>• DB: Vercel Postgres (Neon)</li>
+            <li>• 파일 스토리지: Vercel Blob</li>
+            <li>• SSL 보안 인증서 적용 완료</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-slate-500 gap-4">
+        <p>&copy; 2026 REMO Team Company. All rights reserved.</p>
+        <p class="flex items-center gap-2">
+          <span>도메인: Team-com-leinnkorean.com</span>
+          <span>•</span>
+          <span>총괄 관리자: remo-admin</span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // State Store
+    let currentHeroIdx = 0;
+    const heroImages = [
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1600&q=80",
+      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1600&q=80"
+    ];
+
+    // Initial Projects Data
+    const projectsData = [
+      {
+        id: 1,
+        title: "LEINN 코리안 팀기업 오픈 포털",
+        category: "TECH",
+        categoryName: "IT / 솔루션",
+        status: "진행중",
+        desc: "Vercel, Neon Postgres, Blob 스토리지를 결합한 리모 팀기업의 중앙 통합 포털 개발.",
+        img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 2,
+        title: "팀기업가정신 청년 워크숍 2026",
+        category: "EDU",
+        categoryName: "교육 & 워크숍",
+        status: "모집중",
+        desc: "실제 현장 판매와 팀 다이얼로그를 결합한 핀란드 몬드라곤식 3일 집중 프로젝트 코칭.",
+        img: "https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 3,
+        title: "글로벌 러닝 저니 (Global Journey)",
+        category: "GLOBAL",
+        categoryName: "글로벌 연계",
+        status: "기획완료",
+        desc: "유럽 및 아시아 혁신 팀 아카데미와의 상호 교류 및 현지 스타트업 생태계 리서치.",
+        img: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 4,
+        title: "로컬 소상공인 브랜드 리바이탈",
+        category: "TECH",
+        categoryName: "IT / 솔루션",
+        status: "파일럿",
+        desc: "지역 커뮤니티 기반 브랜드의 SNS 마케팅 및 단일 페이지 판매 솔루션 보급.",
+        img: "https://images.unsplash.com/photo-1556742049-0a67e557224f?auto=format&fit=crop&w=700&q=80"
+      },
+      {
+        id: 5,
+        title: "소셜 벤처 임팩트 측정 툴킷",
+        category: "EDU",
+        categoryName: "교육 & 워크숍",
+        status: "진행중",
+        desc: "초기 임팩트 지표를 가시화하고 투자 및 피칭에 활용할 수 있는 평가 프레임워크 제작.",
+        img: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=700&q=80"
+      }
+    ];
+
+    // Initial Community Board Data (Representing Neon DB rows)
+    let boardData = [
+      {
+        id: 5,
+        category: "공지",
+        title: "[공지] 리모 공식 웹사이트(Team-com-leinnkorean.com) 런칭 안내",
+        author: "remo-admin",
+        date: "2026-09-19",
+        views: 142,
+        content: "안녕하세요. 리모 팀기업(REMO) 공식 홈페이지가 정식 런칭되었습니다.\n본 사이트는 Vercel 호스팅, Neon DB 및 Vercel Blob 인프라를 바탕으로 운영됩니다.\n다양한 의견은 자유 게시판에 남겨주시기 바랍니다.",
+        fileName: "official_launch_guide.pdf",
+        fileUrl: "#"
+      },
+      {
+        id: 4,
+        category: "프로젝트",
+        title: "2026년 하반기 팀 아카데미 실전 비즈니스 아이디어 공유합니다",
+        author: "김리모",
+        date: "2026-09-18",
+        views: 89,
+        content: "이번 학기 새롭게 도전할 B2B 서비스 기획 초안을 올립니다. 팀원 여러분의 적극적인 피드백과 코멘트를 부탁드립니다!",
+        fileName: "business_idea_v1.png",
+        fileUrl: "#"
+      },
+      {
+        id: 3,
+        category: "자유토론",
+        title: "팀기업 협업 툴(노션, 슬랙, 깃허브) 동기화 팁 공유",
+        author: "박동혁",
+        date: "2026-09-17",
+        views: 74,
+        content: "GitHub TeamCompany 레포지토리의 이슈 트래커와 슬랙 알림을 웹훅으로 연동하여 업무 투명성을 대폭 높였습니다.",
+        fileName: null,
+        fileUrl: null
+      },
+      {
+        id: 2,
+        category: "자유토론",
+        title: "LEINN 방식의 다이얼로그(Dialogue) 룰에 대하여",
+        author: "이서연",
+        date: "2026-09-15",
+        views: 112,
+        content: "상대방의 의견을 판단하지 않고 끝까지 경청하는 자세가 우리 리모 팀기업의 가장 큰 자산이라고 느낍니다.",
+        fileName: null,
+        fileUrl: null
+      },
+      {
+        id: 1,
+        category: "공지",
+        title: "[안내] 자유게시판 첨부파일 업로드 규정 안내 (Blob Storage)",
+        author: "remo-admin",
+        date: "2026-09-10",
+        views: 205,
+        content: "게시글 작성 시 이미지 및 문서 파일은 10MB 이하 파일만 첨부 가능하도록 Vercel Blob 정책이 설정되어 있습니다. 참고 바랍니다.",
+        fileName: "policy.pdf",
+        fileUrl: "#"
+      }
+    ];
+
+    let currentActivePostId = null;
+    let selectedTempFileName = null;
+    let isAdmin = true;
+
+    function navigateTo(pageId) {
+      // Hide all pages
+      document.querySelectorAll('.page-content').forEach(el => {
+        el.classList.add('hidden');
+      });
+
+      // Show targeted page
+      const targetEl = document.getElementById(`page-${pageId}`);
+      if (targetEl) {
+        targetEl.classList.remove('hidden');
+      }
+
+      // Update Nav active style
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        if (btn.getAttribute('data-target') === pageId) {
+          btn.className = "nav-btn px-3 py-2 rounded-lg text-sm font-semibold transition text-sky-700 bg-sky-50";
+        } else {
+          btn.className = "nav-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-sky-600 hover:bg-slate-50 transition";
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('hidden');
+    }
+
+    // Hero Image Switcher
+    function changeHeroImage(idx) {
+      currentHeroIdx = idx;
+      const hero = document.getElementById('heroImage');
+      hero.style.opacity = 0;
+      setTimeout(() => {
+        hero.src = heroImages[idx];
+        hero.style.opacity = 0.3;
+      }, 300);
+
+      // Update dots
+      document.querySelectorAll('.hero-dot').forEach((dot, index) => {
+        if (index === idx) {
+          dot.className = "hero-dot w-3 h-3 rounded-full bg-sky-400 ring-2 ring-sky-300";
+        } else {
+          dot.className = "hero-dot w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-400";
+        }
+      });
+    }
+
+    function renderProjects(filter = 'ALL') {
+      const grid = document.getElementById('projectsGrid');
+      const homeGrid = document.getElementById('homeProjectGrid');
+      if (!grid) return;
+
+      const filtered = filter === 'ALL' 
+        ? projectsData 
+        : projectsData.filter(p => p.category === filter);
+
+      grid.innerHTML = filtered.map(p => `
+        <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/90 shadow-sm hover:shadow-xl transition group flex flex-col justify-between">
+          <div>
+            <div class="h-48 overflow-hidden relative bg-slate-100">
+              <img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+              <span class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur text-white text-[11px] font-semibold px-2.5 py-1 rounded-full">
+                ${p.categoryName}
+              </span>
+              <span class="absolute top-3 right-3 bg-sky-500 text-white text-[11px] font-bold px-2 py-0.5 rounded-md shadow">
+                ${p.status}
+              </span>
+            </div>
+            <div class="p-6">
+              <h3 class="text-lg font-bold text-slate-900 mb-2">${p.title}</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">${p.desc}</p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-2 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-[11px] text-slate-400">LEINN 실전 프로젝트</span>
+            <button onclick="navigateTo('board')" class="text-xs font-semibold text-sky-600 hover:text-sky-700 flex items-center gap-1">
+              토론 참여 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      // Also populate Home Teaser grid with first 3 items
+      if (homeGrid) {
+        homeGrid.innerHTML = projectsData.slice(0, 3).map(p => `
+          <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-md transition group">
+            <div class="h-40 overflow-hidden relative">
+              <img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition">
+              <span class="absolute top-2.5 right-2.5 bg-sky-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">
+                ${p.status}
+              </span>
+            </div>
+            <div class="p-5">
+              <div class="text-[10px] font-bold text-sky-600 mb-1">${p.categoryName}</div>
+              <h4 class="font-bold text-slate-900 text-sm mb-2 line-clamp-1">${p.title}</h4>
+              <p class="text-xs text-slate-500 line-clamp-2">${p.desc}</p>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      lucide.createIcons();
+    }
+
+    function filterProjects(cat) {
+      document.querySelectorAll('.proj-filter').forEach(btn => {
+        btn.classList.remove('bg-sky-600', 'text-white', 'active');
+        btn.classList.add('bg-white', 'text-slate-600');
+      });
+      event.target.classList.remove('bg-white', 'text-slate-600');
+      event.target.classList.add('bg-sky-600', 'text-white', 'active');
+      renderProjects(cat);
+    }
+
+    function renderBoard(items = boardData) {
+      const tbody = document.getElementById('boardTableBody');
+      const badge = document.getElementById('postCountBadge');
+      if (!tbody) return;
+
+      badge.innerText = items.length;
+
+      if (items.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="py-12 text-center text-slate-400">
+              <i data-lucide="inbox" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
+              등록된 게시글이 없습니다.
+            </td>
+          </tr>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      tbody.innerHTML = items.map(post => {
+        const isNotice = post.category === '공지';
+        const catBadgeClass = isNotice 
+          ? 'bg-rose-100 text-rose-800' 
+          : post.category === '프로젝트' 
+            ? 'bg-sky-100 text-sky-800' 
+            : 'bg-slate-100 text-slate-700';
+
+        return `
+          <tr onclick="openDetailModal(${post.id})" class="hover:bg-sky-50/50 cursor-pointer transition ${isNotice ? 'bg-amber-50/20' : ''}">
+            <td class="py-4 px-4 text-center font-mono ${isNotice ? 'font-bold text-rose-600' : 'text-slate-400'}">
+              ${isNotice ? '<i data-lucide="pin" class="w-3.5 h-3.5 inline"></i>' : post.id}
+            </td>
+            <td class="py-4 px-4">
+              <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full ${catBadgeClass}">
+                ${post.category}
+              </span>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <span class="font-medium text-slate-900 hover:text-sky-600">${post.title}</span>
+                ${post.fileName ? '<i data-lucide="paperclip" class="w-3.5 h-3.5 text-sky-500"></i>' : ''}
+              </div>
+            </td>
+            <td class="py-4 px-4 text-slate-600 font-medium">
+              <div class="flex items-center gap-1.5">
+                <div class="w-5 h-5 rounded-full bg-slate-200 text-slate-600 text-[10px] font-bold flex items-center justify-center">
+                  ${post.author.charAt(0)}
+                </div>
+                <span>${post.author}</span>
+              </div>
+            </td>
+            <td class="py-4 px-4 text-center text-slate-400 text-[11px]">${post.date}</td>
+            <td class="py-4 px-4 text-center text-slate-500 font-mono">${post.views}</td>
+          </tr>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function filterBoard(cat) {
+      document.querySelectorAll('.board-cat-btn').forEach(btn => {
+        btn.className = "board-cat-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition";
+      });
+      event.target.className = "board-cat-btn active px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-900 text-white transition";
+
+      if (cat === 'all') {
+        renderBoard(boardData);
+      } else {
+        const filtered = boardData.filter(b => b.category === cat);
+        renderBoard(filtered);
+      }
+    }
+
+    function handleBoardSearch() {
+      const term = document.getElementById('boardSearchInput').value.toLowerCase().trim();
+      const filtered = boardData.filter(b => 
+        b.title.toLowerCase().includes(term) || b.author.toLowerCase().includes(term)
+      );
+      renderBoard(filtered);
+    }
+
+    function openDetailModal(postId) {
+      const post = boardData.find(p => p.id === postId);
+      if (!post) return;
+
+      currentActivePostId = postId;
+      post.views += 1; // Simulate view count increment in Neon DB
+
+      document.getElementById('detailCategory').innerText = post.category;
+      document.getElementById('detailDate').innerText = post.date;
+      document.getElementById('detailTitle').innerText = post.title;
+      document.getElementById('detailAuthor').innerText = post.author;
+      document.getElementById('detailContent').innerText = post.content;
+
+      const attachBox = document.getElementById('detailAttachmentBox');
+      if (post.fileName) {
+        attachBox.classList.remove('hidden');
+        document.getElementById('detailFileName').innerText = post.fileName;
+      } else {
+        attachBox.classList.add('hidden');
+      }
+
+      document.getElementById('postDetailModal').classList.remove('hidden');
+      renderBoard(boardData);
+      lucide.createIcons();
+    }
+
+    function closeDetailModal() {
+      document.getElementById('postDetailModal').classList.add('hidden');
+      currentActivePostId = null;
+    }
+
+    function deleteCurrentPost() {
+      if (!currentActivePostId) return;
+      boardData = boardData.filter(p => p.id !== currentActivePostId);
+      closeDetailModal();
+      renderBoard(boardData);
+    }
+
+    function openWriteModal() {
+      selectedTempFileName = null;
+      document.getElementById('fileUploadPrompt').classList.remove('hidden');
+      document.getElementById('fileUploadSuccess').classList.add('hidden');
+      document.getElementById('newPostTitle').value = '';
+      document.getElementById('newPostContent').value = '';
+      document.getElementById('writeModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeWriteModal() {
+      document.getElementById('writeModal').classList.add('hidden');
+    }
+
+    function handleFileSelected(input) {
+      if (input.files && input.files[0]) {
+        selectedTempFileName = input.files[0].name;
+        document.getElementById('fileUploadPrompt').classList.add('hidden');
+        const successBox = document.getElementById('fileUploadSuccess');
+        successBox.classList.remove('hidden');
+        document.getElementById('selectedFileName').innerText = selectedTempFileName + " (Blob 업로드 준비)";
+      }
+    }
+
+    function handlePostSubmit(e) {
+      e.preventDefault();
+      const title = document.getElementById('newPostTitle').value;
+      const content = document.getElementById('newPostContent').value;
+      const author = document.getElementById('newPostAuthor').value || "remo-admin";
+      const category = document.getElementById('newPostCategory').value;
+
+      const newId = boardData.length ? Math.max(...boardData.map(d => d.id)) + 1 : 1;
+      const today = new Date().toISOString().split('T')[0];
+
+      const newPost = {
+        id: newId,
+        category: category,
+        title: title,
+        author: author,
+        date: today,
+        views: 1,
+        content: content,
+        fileName: selectedTempFileName,
+        fileUrl: selectedTempFileName ? "#" : null
+      };
+
+      boardData.unshift(newPost);
+      closeWriteModal();
+      navigateTo('board');
+      renderBoard(boardData);
+    }
+
+    // Contact Form handling
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      const msg = document.getElementById('contactSuccessMsg');
+      msg.classList.remove('hidden');
+      e.target.reset();
+      setTimeout(() => {
+        msg.classList.add('hidden');
+      }, 5000);
+      lucide.createIcons();
+    }
+
+    // Admin Mode toggle
+    function toggleAdminMode() {
+      isAdmin = !isAdmin;
+      const badgeText = document.getElementById('adminBadgeText');
+      const actionArea = document.getElementById('adminPostActions');
+      if (isAdmin) {
+        badgeText.innerText = "remo-admin";
+        if (actionArea) actionArea.classList.remove('hidden');
+      } else {
+        badgeText.innerText = "게스트 모드";
+        if (actionArea) actionArea.classList.add('hidden');
+      }
+    }
+
+    // Initialization on window load
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      renderProjects();
+      renderBoard();
+    });
+  </script>
+</body>
+</html>
