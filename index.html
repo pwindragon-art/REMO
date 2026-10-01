@@ -148,4 +148,159 @@
   </footer>
 
 </body>
+  <!-- ================= [게시판 글쓰기 및 삭제 기능 스크립트] ================= -->
+<script>
+  // 1. 기본 초기 게시글 데이터 (처음 접속 시 표시될 글)
+  const defaultPosts = [
+    {
+      id: 1,
+      category: '공지',
+      title: '리모(REMO) 팀기업 홈페이지 및 게시판이 오픈되었습니다!',
+      author: 'remo-admin',
+      content: '리모 팀기업의 새로운 소식과 프로젝트 진행 상황을 공유하는 공간입니다. 자유롭게 의견을 남겨주세요.',
+      date: '2026. 10. 01'
+    },
+    {
+      id: 2,
+      category: '자유',
+      title: '첫 번째 자유 게시글입니다.',
+      author: '팀원',
+      content: '게시판 기능 테스트 중입니다. 글 작성과 삭제가 정상 작동합니다.',
+      date: '2026. 10. 01'
+    }
+  ];
+
+  // 로컬 스토리지에서 게시글 불러오기 (없으면 기본 데이터 저장)
+  function getStoredPosts() {
+    const saved = localStorage.getItem('remo_board_posts');
+    if (!saved) {
+      localStorage.setItem('remo_board_posts', JSON.stringify(defaultPosts));
+      return defaultPosts;
+    }
+    return JSON.parse(saved);
+  }
+
+  // 게시글 목록을 화면에 다시 그리기
+  function renderBoardList() {
+    const posts = getStoredPosts();
+    const tableBody = document.querySelector('#board-table-body') || document.querySelector('table tbody');
+    
+    if (!tableBody) return;
+
+    if (posts.length === 0) {
+      tableBody.innerHTML = `
+        <tr>
+          <td colspan="6" class="py-12 text-center text-slate-400 text-sm">
+            등록된 게시글이 없습니다. 우측 상단 '글쓰기' 버튼을 눌러 새 글을 등록해보세요!
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    tableBody.innerHTML = posts.map((post) => `
+      <tr class="border-b border-slate-100 hover:bg-orange-50/30 transition text-sm">
+        <td class="py-3 px-4 text-center text-xs text-slate-400">
+          ${post.category === '공지' 
+            ? '<span class="bg-orange-100 text-orange-700 px-2 py-0.5 rounded text-[11px] font-bold">공지</span>' 
+            : post.id}
+        </td>
+        <td class="py-3 px-3 text-center text-xs text-slate-500">${post.category}</td>
+        <td class="py-3 px-4 font-medium text-slate-800 cursor-pointer hover:text-orange-600" onclick="viewPostDetail(${post.id})">
+          ${post.title}
+        </td>
+        <td class="py-3 px-4 text-center text-xs text-slate-600">${post.author}</td>
+        <td class="py-3 px-4 text-center text-xs text-slate-400">${post.date}</td>
+        <td class="py-3 px-4 text-center">
+          <button 
+            onclick="deleteBoardPost(${post.id})" 
+            class="px-2.5 py-1 text-xs bg-red-50 text-red-600 hover:bg-red-100 rounded-md font-medium transition"
+          >
+            삭제
+          </button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // 2. 글 삭제 기능
+  function deleteBoardPost(id) {
+    if (!confirm('정말 이 게시글을 삭제하시겠습니까?')) return;
+
+    let posts = getStoredPosts();
+    posts = posts.filter(p => p.id !== id);
+    localStorage.setItem('remo_board_posts', JSON.stringify(posts));
+    
+    alert('게시글이 삭제되었습니다.');
+    renderBoardList();
+  }
+
+  // 3. 새 글 작성 및 등록 기능
+  function saveNewPost(title, content, author = 'remo-admin', category = '자유') {
+    if (!title.trim() || !content.trim()) {
+      alert('제목과 내용을 모두 입력해주세요!');
+      return false;
+    }
+
+    const posts = getStoredPosts();
+    const today = new Date();
+    const dateStr = `${today.getFullYear()}. ${String(today.getMonth() + 1).padStart(2, '0')}. ${String(today.getDate()).padStart(2, '0')}`;
+
+    const newPost = {
+      id: posts.length > 0 ? Math.max(...posts.map(p => p.id)) + 1 : 1,
+      category: category,
+      title: title,
+      author: author || '익명',
+      content: content,
+      date: dateStr
+    };
+
+    // 최신 글을 맨 위에 추가
+    posts.unshift(newPost);
+    localStorage.setItem('remo_board_posts', JSON.stringify(posts));
+    
+    alert('게시글이 성공적으로 등록되었습니다!');
+    renderBoardList();
+    return true;
+  }
+
+  // 4. 글 상세 보기 팝업
+  function viewPostDetail(id) {
+    const posts = getStoredPosts();
+    const post = posts.find(p => p.id === id);
+    if (!post) return;
+
+    alert(`[${post.category}] ${post.title}\n작성자: ${post.author} (${post.date})\n\n${post.content}`);
+  }
+
+  // 페이지가 열리면 게시판 목록 불러오기
+  window.addEventListener('DOMContentLoaded', () => {
+    renderBoardList();
+
+    // 기존 글쓰기 폼이 있다면 submit 이벤트 연결
+    const writeForm = document.querySelector('form');
+    if (writeForm) {
+      writeForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const titleInput = writeForm.querySelector('input[name="title"]') || writeForm.querySelector('input[type="text"]');
+        const contentInput = writeForm.querySelector('textarea');
+        const authorInput = writeForm.querySelector('input[name="author"]');
+        const categoryInput = writeForm.querySelector('select');
+
+        const title = titleInput ? titleInput.value : '';
+        const content = contentInput ? contentInput.value : '';
+        const author = authorInput ? authorInput.value : 'remo-admin';
+        const category = categoryInput ? categoryInput.value : '자유';
+
+        if (saveNewPost(title, content, author, category)) {
+          writeForm.reset();
+          // 모달창이 열려있다면 닫기
+          const modal = writeForm.closest('.fixed');
+          if (modal) modal.style.display = 'none';
+        }
+      });
+    }
+  });
+</script>
+<!-- ========================================================================= -->
 </html>
