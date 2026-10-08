@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>리모(REMO) 팀기업 | 혁신 비즈니스 & 팀 프러너십 솔루션</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              500: '#f97316',
+              600: '#ea580c',
+              700: '#c2410c'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-orange-500 selection:text-white">
+
+  <!-- 1. 상단 내비게이션 바 -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2.5">
+        <span class="text-2xl font-black bg-gradient-to-r from-orange-600 to-amber-500 bg-clip-text text-transparent">REMO</span>
+        <span class="text-xs px-2.5 py-0.5 rounded-full bg-orange-100 text-orange-800 font-semibold border border-orange-200">Team Company</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+        <a href="#solutions" class="hover:text-orange-600 transition">핵심 솔루션</a>
+        <a href="#process" class="hover:text-orange-600 transition">협업 프로세스</a>
+        <a href="index.html" class="hover:text-orange-600 transition">메인 홈으로 가기</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="#contact" class="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-xs font-semibold rounded-xl shadow-sm transition">
+          무료 상담 신청
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. Hero Section -->
+  <section class="relative overflow-hidden bg-slate-950 text-white py-24 sm:py-32">
+    <div class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity" style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2000&q=80');"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/60 to-slate-950"></div>
+
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 text-center">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-300 text-xs font-semibold mb-6">
+        <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
+        팀으로 도전하고, 비즈니스로 증명합니다
+      </div>
+
+      <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight">
+        새로운 가치를 창출하는<br />
+        <span class="bg-gradient-to-r from-orange-400 to-amber-300 bg-clip-text text-transparent">혁신 팀기업 솔루션</span>
+      </h1>
+
+      <p class="mt-6 text-base sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        리모(REMO)는 실전형 비즈니스 실행력과 팀워크를 기반으로 사회적·경제적 임팩트를 만들어내는 파트너입니다.
+      </p>
+
+      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#contact" class="w-full sm:w-auto px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-2xl shadow-lg transition text-sm">
+          비즈니스 프로젝트 협업 문의하기
+        </a>
+        <a href="index.html" class="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-2xl backdrop-blur border border-white/20 transition text-sm">
+          메인 홈페이지로 돌아가기
+        </a>
+      </div>
+
+      <div class="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto pt-10 border-t border-slate-800 text-left">
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+          <div class="text-2xl font-black text-orange-400">100%</div>
+          <div class="text-xs text-slate-400 mt-1">현장 실행형 프로젝트</div>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+          <div class="text-2xl font-black text-orange-400">Agile</div>
+          <div class="text-xs text-slate-400 mt-1">신속한 MVP 가설 검증</div>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+          <div class="text-2xl font-black text-orange-400">Co-op</div>
+          <div class="text-xs text-slate-400 mt-1">협동조합 기반 지속성</div>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+          <div class="text-2xl font-black text-orange-400">Global</div>
+          <div class="text-xs text-slate-400 mt-1">LEINN 네트워크 연계</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 핵심 솔루션 섹션 -->
+  <section id="solutions" class="py-24 max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center max-w-2xl mx-auto">
+      <span class="text-xs font-bold text-orange-600 uppercase tracking-widest">Our Services</span>
+      <h2 class="text-3xl font-extrabold text-slate-900 mt-2">리모가 제공하는 3가지 핵심 솔루션</h2>
+      <p class="text-slate-600 text-sm mt-3 leading-relaxed">
+        탁상공론이 아닌 현장에서 검증된 실행 모델로 귀사의 비즈니스 전환을 이끕니다.
+      </p>
+    </div>
+
+    <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all">
+        <div class="w-14 h-14 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-2xl mb-6">🚀</div>
+        <h3 class="text-xl font-bold text-slate-900">비즈니스 MVP 검증 컨설팅</h3>
+        <p class="text-sm text-slate-600 mt-3 leading-relaxed">
+          아이디어 단계부터 시제품 제작, 타겟 고객 인터뷰 및 시장 피드백 수집까지 4주 단위로 가설을 검증합니다.
+        </p>
+      </div>
+
+      <div class="bg-white p-8 rounded-3xl border-2 border-orange-500 shadow-lg relative">
+        <div class="absolute -top-3.5 right-6 bg-orange-500 text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase">
+          Best Popular
+        </div>
+        <div class="w-14 h-14 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-2xl mb-6">👥</div>
+        <h3 class="text-xl font-bold text-slate-900">팀 프러너십 조직 혁신 워크숍</h3>
+        <p class="text-sm text-slate-600 mt-3 leading-relaxed">
+          수동적인 조직을 스스로 비즈니스를 발굴하고 실행하는 '자기주도 팀'으로 탈바꿈시킵니다.
+        </p>
+      </div>
+
+      <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all">
+        <div class="w-14 h-14 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-2xl mb-6">🌱</div>
+        <h3 class="text-xl font-bold text-slate-900">임팩트 플랫폼 & 협동 모델 구축</h3>
+        <p class="text-sm text-slate-600 mt-3 leading-relaxed">
+          지역사회와 상생하는 지속 가능한 소셜 임팩트 구조와 비영리/협동조합 형태의 사업 모델을 기획·개발합니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 상담 신청 폼 -->
+  <section id="contact" class="py-20 max-w-4xl mx-auto px-4 sm:px-6">
+    <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-8 sm:p-12 text-white shadow-2xl border border-slate-700">
+      <div class="max-w-xl mx-auto text-center mb-8">
+        <h2 class="text-2xl sm:text-3xl font-extrabold">리모 팀기업과 함께 시작하세요</h2>
+        <p class="text-slate-300 text-xs sm:text-sm mt-2">
+          프로젝트 협업, 사내 워크숍 문의 등 편하게 남겨주시면 24시간 내에 답변드립니다.
+        </p>
+      </div>
+
+      <form id="landing-lead-form" class="space-y-4 max-w-lg mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <input type="text" id="lead-name" required placeholder="성함 / 직함" class="w-full px-3 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white outline-none focus:border-orange-500" />
+          <input type="text" id="lead-company" required placeholder="기업 / 팀명" class="w-full px-3 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white outline-none focus:border-orange-500" />
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <input type="email" id="lead-email" required placeholder="이메일 주소" class="w-full px-3 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white outline-none focus:border-orange-500" />
+          <input type="tel" id="lead-phone" placeholder="연락처 (선택)" class="w-full px-3 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white outline-none focus:border-orange-500" />
+        </div>
+        <textarea id="lead-message" rows="3" required placeholder="문의하실 내용을 입력해 주세요." class="w-full px-3 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs text-white outline-none focus:border-orange-500 resize-none"></textarea>
+        <button type="submit" class="w-full py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl text-xs shadow-md transition">
+          상담 신청서 제출하기
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- 5. 푸터 -->
+  <footer class="bg-slate-950 text-slate-400 py-8 border-t border-slate-800 text-xs text-center">
+    <p>© 2026 REMO. Team-com-leinnkorean.com | All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById('landing-lead-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('lead-name').value;
+      alert(`[상담 신청 완료]\n${name}님, 문의가 성공적으로 접수되었습니다! 담당자가 신속히 연락드리겠습니다.`);
+      this.reset();
+    });
+  </script>
+</body>
+</html>
