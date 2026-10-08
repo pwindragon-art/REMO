@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>REMO 웹 서비스 개발 및 운영 안내서</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      body {
+        background-color: white !important;
+        padding: 0 !important;
+      }
+      .page-break {
+        page-break-before: always;
+      }
+      .card {
+        border: 1px solid #e2e8f0 !important;
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased p-6 sm:p-12 font-sans">
+
+  <!-- 상단 다운로드 조작 바 (PDF 인쇄 시 숨겨짐) -->
+  <div class="no-print max-w-4xl mx-auto mb-6 flex justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+    <div>
+      <span class="text-sm font-bold text-slate-800">개발 안내서 PDF 변환</span>
+      <p class="text-xs text-slate-500">버튼을 누른 후 대상 창에서 'PDF로 저장'을 선택하세요.</p>
+    </div>
+    <button onclick="window.print()" class="px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-2">
+      <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M4 16h12v-2H4v2zm12-9H4a2 2 0 00-2 2v3h4v4h8v-4h4V9a2 2 0 00-2-2zm-2 2H6V5h8v4z"/></svg>
+      PDF로 저장 / 인쇄하기
+    </button>
+  </div>
+
+  <!-- 인쇄 본문 영역 -->
+  <main class="max-w-4xl mx-auto bg-white p-10 sm:p-14 rounded-2xl shadow-sm border border-slate-200 card space-y-8">
+    
+    <!-- 문서 헤더 -->
+    <header class="border-b border-slate-200 pb-6 flex justify-between items-end">
+      <div>
+        <span class="text-xs font-bold uppercase tracking-wider text-orange-600">Technical Documentation</span>
+        <h1 class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">REMO 웹 서비스 개발 및 운영 안내서</h1>
+        <p class="text-xs text-slate-500 mt-1">공식 웹사이트, 랜딩페이지, 카드뉴스 생성기 시스템 명세서</p>
+      </div>
+      <div class="text-right text-xs text-slate-400">
+        <p>버전: 1.0</p>
+        <p>배포 환경: Vercel / GitHub</p>
+      </div>
+    </header>
+
+    <!-- 1. 시스템 아키텍처 -->
+    <section class="space-y-3">
+      <h2 class="text-lg font-bold text-slate-900 border-l-4 border-orange-500 pl-3">1. 시스템 아키텍처 개요</h2>
+      <p class="text-xs text-slate-600 leading-relaxed">
+        별도의 유료 백엔드 서버 없이 <strong>정적 호스팅(Vercel)</strong>과 <strong>서버리스 클라우드(Google Apps Script)</strong>를 결합하여 운영비용 없이 자동화된 데이터 수집 및 콘텐츠 제작 도구를 제공하도록 설계되었습니다.
+      </p>
+      <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs font-mono text-slate-700 leading-relaxed">
+        [Client Web Browser]<br/>
+        &nbsp;&nbsp;├─ index.html (메인 공식 홈페이지)<br/>
+        &nbsp;&nbsp;├─ landing.html ──(HTTP POST / no-cors)──&gt; [Google Apps Script] ──&gt; [Google Sheets DB]<br/>
+        &nbsp;&nbsp;└─ cardnews.html ──(HTML5 Canvas Engine)──&gt; 로컬 다운로드 (PNG / ZIP)
+      </div>
+    </section>
+
+    <!-- 2. 파일 디렉터리 구조 -->
+    <section class="space-y-3">
+      <h2 class="text-lg font-bold text-slate-900 border-l-4 border-orange-500 pl-3">2. 프로젝트 디렉터리 및 모듈 명세</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs text-left border-collapse border border-slate-200">
+          <thead>
+            <tr class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
+              <th class="p-3 border-r border-slate-200">파일명</th>
+              <th class="p-3 border-r border-slate-200">주요 기능 및 역할</th>
+              <th class="p-3">종속 라이브러리</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 text-slate-600">
+            <tr>
+              <td class="p-3 font-semibold text-slate-800 border-r border-slate-200">index.html</td>
+              <td class="p-3 border-r border-slate-200">공식 웹사이트 메인 화면, 팀소개, 프로젝트 섹션, 네비게이션 링크 연동</td>
+              <td class="p-3">Tailwind CSS</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-slate-800 border-r border-slate-200">landing.html</td>
+              <td class="p-3 border-r border-slate-200">리드 획득용 상담 접수 폼, 스프레드시트 비동기 데이터 전송 스크립트 탑재</td>
+              <td class="p-3">Tailwind CSS</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-slate-800 border-r border-slate-200">cardnews.html</td>
+              <td class="p-3 border-r border-slate-200">1080x1080 정방형 카드뉴스 생성 엔진, 템플릿 제어, 개별 PNG 및 전체 ZIP 압축 다운로드</td>
+              <td class="p-3">Tailwind CSS, JSZip</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. 핵심 연동 규격 -->
+    <section class="space-y-4">
+      <h2 class="text-lg font-bold text-slate-900 border-l-4 border-orange-500 pl-3">3. 핵심 연동 및 통신 규격</h2>
+      
+      <div class="space-y-2">
+        <h3 class="text-sm font-bold text-slate-800">3.1 구글 스프레드시트 리드 연동 (Google Apps Script)</h3>
+        <ul class="list-disc list-inside text-xs text-slate-600 space-y-1">
+          <li><strong>엔드포인트 형태:</strong> Google Apps Script Web App (<code class="bg-slate-100 px-1 py-0.5 rounded text-orange-600">/exec</code> 주소)</li>
+          <li><strong>보안 및 권한:</strong> 액세스 권한은 반드시 <code class="bg-slate-100 px-1 py-0.5 rounded font-bold">모든 사용자(Anyone)</code>로 배포되어야 외부 폼 전송 가능</li>
+          <li><strong>전송 파라미터 규격:</strong> <code class="bg-slate-100 px-1 py-0.5 rounded">name</code>, <code class="bg-slate-100 px-1 py-0.5 rounded">company</code>, <code class="bg-slate-100 px-1 py-0.5 rounded">email</code>, <code class="bg-slate-100 px-1 py-0.5 rounded">phone</code>, <code class="bg-slate-100 px-1 py-0.5 rounded">message</code></li>
+          <li><strong>CORS 처리:</strong> 브라우저 통신 시 <code class="bg-slate-100 px-1 py-0.5 rounded font-mono">mode: 'no-cors'</code> 적용을 통해 요청 차단 방지</li>
+        </ul>
+      </div>
+
+      <div class="space-y-2">
+        <h3 class="text-sm font-bold text-slate-800">3.2 카드뉴스 생성 엔진</h3>
+        <ul class="list-disc list-inside text-xs text-slate-600 space-y-1">
+          <li><strong>캔버스 규격:</strong> 표준 인스타그램 및 소셜미디어 포맷인 1080px × 1080px 고정 해상도 렌더링</li>
+          <li><strong>데이터 구조:</strong> 단일 페이지 상태 객체 배열(<code class="bg-slate-100 px-1 py-0.5 rounded font-mono">slides[]</code>)을 통해 멀티 슬라이드 동적 관리</li>
+          <li><strong>압축 내보내기:</strong> JSZip 라이브러리를 통해 오프스크린 캔버스 Base64 데이터를 메모리상에서 압축 후 즉각 다운로드 링크 트리거</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4. 배포 및 유지보수 워크플로우 -->
+    <section class="space-y-3">
+      <h2 class="text-lg font-bold text-slate-900 border-l-4 border-orange-500 pl-3">4. 배포 파이프라인 및 유지보수 가이드</h2>
+      <ol class="list-decimal list-inside text-xs text-slate-600 space-y-1.5">
+        <li><strong>코드 수정 및 반영:</strong> GitHub <code class="bg-slate-100 px-1 py-0.5 rounded">main</code> 브랜치에 코드를 커밋하면, Vercel이 수 초 내에 감지하여 자동 빌드/배포를 완료합니다.</li>
+        <li><strong>캐시 갱신:</strong> 배포 후 화면 변경이 안 보일 경우 브라우저 강력 새로고침(<code class="bg-slate-100 px-1 py-0.5 rounded font-mono">Ctrl + Shift + R</code> 또는 <code class="bg-slate-100 px-1 py-0.5 rounded font-mono">Cmd + Shift + R</code>)을 수행합니다.</li>
+        <li><strong>Apps Script 로직 갱신 주의사항:</strong> 구글 스크립트 코드 수정 시에는 스크립트 편집기에서 <strong>[배포] → [배포 관리] → 버전 '신규'</strong>로 갱신 배포해야 수정된 로직이 실제 시트에 반영됩니다.</li>
+      </ol>
+    </section>
+
+    <!-- 문서 푸터 -->
+    <footer class="pt-6 border-t border-slate-200 text-center text-[11px] text-slate-400">
+      REMO Web Application Service Project &copy; 2026. All rights reserved.
+    </footer>
+  </main>
+
+</body>
+</html>
