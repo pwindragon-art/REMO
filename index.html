@@ -19,7 +19,7 @@
         <a href="#team" class="hover:text-orange-600">구성원</a>
         <a href="#projects" class="hover:text-orange-600">진행프로젝트</a>
         <a href="#services" class="hover:text-orange-600">주요 상품/서비스</a>
-        <a href="#landing" class="hover:text-orange-600">랜딩페이지</a>
+        <a href="landing.html" class="hover:text-orange-600">랜딩페이지</a>
         <a href="#contact" class="hover:text-orange-600">고객상담</a>
         <a href="#board" class="hover:text-orange-600">자유 게시판</a>
       </nav>
@@ -105,12 +105,66 @@
         <span class="text-xs font-bold text-orange-600 uppercase tracking-wider">Menu Area</span>
         <h3 class="font-bold text-base mt-1 mb-1">랜딩페이지</h3>
         <p class="text-xs text-gray-500">전용 프로모션 랜딩페이지 준비 중입니다.</p>
+        <a href="landing.html" class="inline-block mt-3 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-xs font-semibold rounded-lg shadow-sm transition">
+  전용 랜딩페이지 보러가기 →
+</a>
       </section>
 
       <section id="contact" class="bg-white p-6 rounded-xl border border-dashed text-center">
         <span class="text-xs font-bold text-orange-600 uppercase tracking-wider">Menu Area</span>
-        <h3 class="font-bold text-base mt-1 mb-1">고객상담</h3>
-        <p class="text-xs text-gray-500">문의창구 개설 준비 중입니다.</p>
+        <div id="contact" class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-left">
+  <div class="flex items-center gap-2 mb-2">
+    <span class="p-1.5 rounded-lg bg-orange-100 text-orange-600 text-sm">💬</span>
+    <h3 class="font-bold text-base text-slate-800">1:1 고객상담 및 협업 문의</h3>
+  </div>
+  <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+    프로젝트 의뢰, 팀 워크숍 교육, 비즈니스 제휴 문의를 남겨주시면 담당자가 신속히 답변드립니다.
+  </p>
+
+  <form id="contact-inquiry-form" class="space-y-3">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <input 
+        type="text" 
+        id="inquiry-name" 
+        required 
+        placeholder="성함 / 회사명" 
+        class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-orange-500"
+      />
+      <input 
+        type="email" 
+        id="inquiry-email" 
+        required 
+        placeholder="이메일 주소" 
+        class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-orange-500"
+      />
+    </div>
+
+    <select 
+      id="inquiry-type" 
+      class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-orange-500"
+    >
+      <option value="프로젝트 협업 의뢰">프로젝트 협업 의뢰</option>
+      <option value="팀 프러너십 교육 및 워크숍">팀 프러너십 교육 및 워크숍</option>
+      <option value="MVP 및 비즈니스 컨설팅">MVP 및 비즈니스 컨설팅</option>
+      <option value="기타 제휴 문의">기타 일반 문의</option>
+    </select>
+
+    <textarea 
+      id="inquiry-message" 
+      rows="3" 
+      required 
+      placeholder="문의하실 내용을 입력해 주세요." 
+      class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-orange-500 resize-none"
+    ></textarea>
+
+    <button 
+      type="submit" 
+      class="w-full py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-xs font-semibold shadow-sm transition"
+    >
+      문의 접수하기
+    </button>
+  </form>
+</div>
       </section>
     </div>
 
@@ -533,5 +587,17 @@
       });
     }
   });
+  // 고객상담 문의 접수 이벤트
+    const inquiryForm = document.getElementById('contact-inquiry-form');
+    if (inquiryForm) {
+      inquiryForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('inquiry-name').value;
+        const type = document.getElementById('inquiry-type').value;
+
+        alert(`[문의 접수 완료]\n\n${name}님, 문의가 성공적으로 접수되었습니다.\n문의 분류: ${type}\n\n남겨주신 이메일로 24시간 이내에 회신드리겠습니다.`);
+        inquiryForm.reset();
+      });
+    }
 </script>
 <!-- ===================================================================================== -->
