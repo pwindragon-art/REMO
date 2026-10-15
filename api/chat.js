@@ -27,7 +27,9 @@ export default async function handler(req, res) {
   modelName = modelName.replace('models/', '').trim();
 
   // 구글 스프레드시트 Web App URL
-  const googleScriptUrl = process.env.GOOGLE_SHEET_WEBAPP_URL || '';
+  const googleScriptUrl =
+    process.env.GOOGLE_SHEET_WEBAPP_URL ||
+    'https://script.google.com/macros/s/AKfycbwPl2qfPmpIYB46ASsaYGse62tI_-RXP3FQwW-tnYOd7pcUCsf8lMc6c7ChYgy3mmnt/exec';
 
   if (!apiKey) {
     return res.status(500).json({ error: 'GEMINI_API_KEY is not configured in Vercel environment variables.' });
@@ -84,20 +86,19 @@ export default async function handler(req, res) {
 
     const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || '답변을 생성하지 못했습니다.';
 
-    // [구글 시트로 대화 기록 전송]
+    // [구글 시트로 대화 기록 전송 (가장 안전한 방식)]
     if (googleScriptUrl) {
       try {
-        const formData = new URLSearchParams();
-        formData.append('type', 'chatbot');
-        formData.append('question', message);
-        formData.append('answer', reply);
+        const queryParams = new URLSearchParams({
+          type: 'chatbot',
+          question: message,
+          answer: reply
+        });
 
-        await fetch(googleScriptUrl, {
+        // URL 쿼리 파라미터와 redirect: 'follow'를 명시하여 구글 Apps Script로 확실히 전달
+        await fetch(`${googleScriptUrl}?${queryParams.toString()}`, {
           method: 'POST',
-          body: formData,
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
+          redirect: 'follow'
         });
       } catch (sheetErr) {
         console.error('구글 시트 저장 실패:', sheetErr);
