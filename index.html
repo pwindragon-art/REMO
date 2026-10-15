@@ -601,4 +601,125 @@
       });
     }
 </script>
+<!-- REMO AI 상담 챗봇 위젯 -->
+<div id="remo-chatbot-widget" class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+  <!-- 챗봇 팝업 대화창 -->
+  <div id="chat-window" class="hidden w-[360px] sm:w-[400px] h-[520px] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden mb-4 transition-all duration-300">
+    <!-- 챗봇 헤더 -->
+    <div class="bg-gradient-to-r from-orange-500 to-amber-500 p-4 text-white flex justify-between items-center shadow">
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center font-bold text-sm">🤖</div>
+        <div>
+          <h3 class="font-bold text-sm">REMO AI 고객 상담원</h3>
+          <p class="text-[11px] text-orange-100">실시간 서비스 및 인증 문의 응답</p>
+        </div>
+      </div>
+      <button id="chat-close-btn" class="text-white hover:text-slate-200 text-lg font-bold p-1">&times;</button>
+    </div>
+
+    <!-- 대화 내용 영역 -->
+    <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-50 text-xs">
+      <div class="flex items-start gap-2">
+        <div class="w-6 h-6 rounded-full bg-orange-500 text-white flex items-center justify-center text-[10px] font-bold">R</div>
+        <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm border border-slate-200 text-slate-800 leading-relaxed max-w-[80%]">
+          안녕하세요! REMO 고객 상담 챗봇입니다. 로그인/회원가입 절차나 서비스 이용에 대해 무엇이든 물어보세요!
+        </div>
+      </div>
+    </div>
+
+    <!-- 메시지 입력창 -->
+    <form id="chat-form" class="p-3 bg-white border-t border-slate-200 flex gap-2">
+      <input type="text" id="chat-input" placeholder="문의 사항을 입력하세요..." autocomplete="off" class="flex-1 px-3 py-2 border border-slate-200 rounded-xl text-xs outline-none focus:border-orange-500" />
+      <button type="submit" id="chat-submit-btn" class="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs rounded-xl shadow transition">전송</button>
+    </form>
+  </div>
+
+  <!-- 우측 하단 플로팅 버튼 -->
+  <button id="chat-toggle-btn" class="flex items-center gap-2 px-5 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105">
+    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.5 21.5l4.638-.825A9.954 9.954 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>
+    <span class="text-sm">AI 실시간 상담</span>
+  </button>
+</div>
+
+<script>
+  const toggleBtn = document.getElementById('chat-toggle-btn');
+  const closeBtn = document.getElementById('chat-close-btn');
+  const chatWindow = document.getElementById('chat-window');
+  const chatForm = document.getElementById('chat-form');
+  const chatInput = document.getElementById('chat-input');
+  const chatMessages = document.getElementById('chat-messages');
+  const submitBtn = document.getElementById('chat-submit-btn');
+
+  toggleBtn.addEventListener('click', () => {
+    chatWindow.classList.toggle('hidden');
+    if (!chatWindow.classList.contains('hidden')) {
+      chatInput.focus();
+    }
+  });
+
+  closeBtn.addEventListener('click', () => {
+    chatWindow.classList.add('hidden');
+  });
+
+  function appendMessage(sender, text) {
+    const isUser = sender === 'user';
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `flex items-start gap-2 ${isUser ? 'justify-end' : ''}`;
+
+    if (isUser) {
+      msgDiv.innerHTML = `
+        <div class="bg-orange-500 text-white p-3 rounded-2xl rounded-tr-none shadow-sm text-xs leading-relaxed max-w-[80%] whitespace-pre-wrap">${text}</div>
+      `;
+    } else {
+      msgDiv.innerHTML = `
+        <div class="w-6 h-6 rounded-full bg-orange-500 text-white flex items-center justify-center text-[10px] font-bold">R</div>
+        <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm border border-slate-200 text-slate-800 text-xs leading-relaxed max-w-[80%] whitespace-pre-wrap">${text}</div>
+      `;
+    }
+
+    chatMessages.appendChild(msgDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  chatForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const query = chatInput.value.trim();
+    if (!query) return;
+
+    appendMessage('user', query);
+    chatInput.value = '';
+    submitBtn.disabled = true;
+
+    const loadingDiv = document.createElement('div');
+    loadingDiv.id = 'chat-loading';
+    loadingDiv.className = 'flex items-start gap-2';
+    loadingDiv.innerHTML = `
+      <div class="w-6 h-6 rounded-full bg-orange-500 text-white flex items-center justify-center text-[10px] font-bold">R</div>
+      <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm border border-slate-200 text-slate-400 text-xs">답변을 작성하고 있습니다...</div>
+    `;
+    chatMessages.appendChild(loadingDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: query })
+      });
+      const data = await res.json();
+      loadingDiv.remove();
+
+      if (data.reply) {
+        appendMessage('bot', data.reply);
+      } else {
+        appendMessage('bot', data.error || '답변을 불러오는 중 문제가 발생했습니다.');
+      }
+    } catch (err) {
+      loadingDiv.remove();
+      appendMessage('bot', '서버와 연결할 수 없습니다. 잠시 후 다시 시도해 주세요.');
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+</script>
 <!-- ===================================================================================== -->
